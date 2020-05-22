@@ -1,1 +1,1 @@
-This folder contains simple vectorized loops for arithmetic operations on vectors/arrays. Convinient template functions available for variable data types
+This folder contains simple vectorized loops for arithmetic operations on vectors/arrays. Convinient template functions available for variable data types. As of now, the code works only with intel CPUs
