@@ -1,5 +1,5 @@
 # Description and Aim
-This repo aims to explore various vectorization and GPGPU approaches to popular sorting algorithm.
+**This repo aims to explore various vectorization and GPGPU approaches to popular sorting algorithm.**
 
 ## RESULTS - 
 **Note that the time reported is only for the sorting algorithm to run and excludes time for populating and checking the sorted array**</br>
