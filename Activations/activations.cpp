@@ -1,12 +1,32 @@
 #include <CL/sycl.hpp>
 #include <iostream>
 #include <chrono>
+#include <cuda_runtime_api.h>
 
 using namespace  std::chrono;
 using namespace cl::sycl;
 
+//CUDA
+__host__  void ReLU(float* input, uint size){
+    uint id = blockDim.x*blockIdx.x + threadIdx.x;
+    if(id<size){
+        float  element = input[id];
+        float sign = (int32_t(element)>>31) + 1.0f;
+        input[id] = sign * element;
+    }
+}
 
 
+//CUDA
+__host__ void Leaky_ReLU(float* input, uint size){
+    uint id = blockDim.x*blockIdx.x + threadIdx.x;
+    if(id<size){
+        float  element = input[id];
+        float scale = 1.0f/2.0f;
+        float sign = (int32_t(element)>>31) + 2.0f;
+        input[id] = scale * sign * element;
+    }
+}
 
 //SYCL
 void ReLU(float* input, int size){
@@ -45,7 +65,7 @@ void ReLU(float* input, int size){
     #pragma omp simd
     for(int i = 0; i<size; i++){
         float element = *(input + i);
-        int sign = (int32_t(element)>>31) + 1;
+        int sign = (int32_t(element)>>31) + 1.0f;
         *(input + i) = sign * element;
     }
 }
