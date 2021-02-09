@@ -14,6 +14,7 @@ Currently the It contains the Following Operations -
 * A Convolutional Layer(Without the Backprop, hopefully I will commit that soon)
 * Machine Learning Models like Linear and Logistic regression, Bayes and Markov chains(Soon)
 * Activations like Relu, Leaky Relu(Both are non divergent operations) and Tanh
+* Parallel sorting and graph traversals
 
 In terms of usability, each file contains just the function and class definitions. Also, I am still pondering a way to make a device selector interface for
 SYCL. 
