@@ -1,16 +1,3 @@
-#include <iostream>
-#include <bits/stdc++.h>
-#include <omp.h>
-#include <atomic>
-#include <pthread.h>
-#include <cstdlib>
-#include <algorithm>
-#include <tuple>
-#include <vector>
-#include <thread>
-
-
-
 template <typename type>
 class List{
 public:
@@ -51,7 +38,8 @@ public:
     }
 
     size_t getSize(){
-        return this->num_elements;
+        auto size = this->num_elements;
+        return size;
     }
 
     type* data(int offset = 0){
@@ -69,9 +57,9 @@ public:
     */
 
     int remove(type item, int (*compare_func)(type v1, type v2) = nullptr, int remove_all=0){
-            auto size = (int)this->getSize();
-            int i;
-            std::queue<int> occurences;
+        auto size = (int)this->getSize();
+        int i;
+        std::queue<int> occurences;
         if(compare_func == nullptr){
             #pragma omp simd
             for (i = 0; i<size; i++){
@@ -79,19 +67,24 @@ public:
                     occurences.push(i);
             }
             if (remove_all){
+                int j = 0;
                 while(!occurences.empty()){
                     i = occurences.front();
-                    std::copy(this->array + i + 1, this->array + size, this->array + i);
+                    std::copy(this->array + i + 1 -j , this->array + size - j, this->array + i -j);
+                    this->num_elements -=1 ;
                     occurences.pop();
+                    this->array = (type*)realloc(this->array, this->num_elements*(sizeof(type)));
+                    //free(this->array + size - j -1);
+                    j+=1;
                 }
-                this->array = (type*)realloc(this->array, size-occurences.size());
-                this->num_elements -= occurences.size();
+                
             }
             else{
                 i = occurences.front();
                 std::copy(this->array + i + 1, this->array + size, this->array + i);
-                this->array = (type*)realloc(this->array, size-1);
-                this->num_elements -= this->num_elements;
+                this->array = (type*)realloc(this->array, (size-1)*sizeof(type));
+                this->num_elements -= 1;
+                //free(this->array + this->num_elements - 1);
             }
             return 0;
         }
@@ -103,19 +96,23 @@ public:
                     occurences.push(i);
             }
             if (remove_all){
+                int j = 0;
                 while(!occurences.empty()){
                     i = occurences.front();
-                    std::copy(this->array + i + 1, this->array + size, this->array + i);
+                    std::copy(this->array + i + 1 -j, this->array + size - j, this->array + i -j);
                     occurences.pop();
+                    this->num_elements -=1;
+                    this->array = (type*)realloc(this->array, this->num_elements*(sizeof(type)));
+                    //free(this->array + size - j - 1);
+                    j+=1;
                 }
-                this->array = (type*)realloc(this->array, size-occurences.size());
-                this->num_elements -= occurences.size();
             }
             else{
                 i = occurences.front();
                 std::copy(this->array + i + 1, this->array + size, this->array + i);
-                this->array = (type*)realloc(this->array, size-1);
-                this->num_elements -= this->num_elements;
+                this->array = (type*)realloc(this->array, (size-1)*sizeof(type));
+                this->num_elements -= 1;
+                //free(this->array + this->num_elements - 1);
             }
             return 0;
         }
