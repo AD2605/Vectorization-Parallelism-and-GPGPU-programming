@@ -6,7 +6,7 @@ All programs are compiled using the Intel-C++ compiler as I run an intel machine
 Some programs will have a architecture specific compilation, namely AVX2. 
 However, if it is required to compile for some other architecture say SSE, it can recompiled with the icpc compiler directives. 
 
-All the present and upcoming SYCL/openCL codes are tested on an RTX 2070 and an Intel i7 9750H and the Intel Neo GPU (iGPU)
+All the present and upcoming SYCL/openCL codes are tested on an RTX 2070 and an Intel i7 9750H and the Intel Neo GPU (iGPU, Intel UHD Graphics 630)
 
 Currently the It contains the Following Operations - 
 * BLAS I and some BLAS II routines.
