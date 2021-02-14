@@ -7,7 +7,7 @@ using namespace cl::sycl;
 using namespace std;
 
 class linear_algebra;
-
+//SYCL 
 template<typename type>
 type*  matmul(sycl::queue& queue, type* A, type* B, int* size)
 {
@@ -70,13 +70,18 @@ type*  matmul(sycl::queue& queue, type* A, type* B, int* size)
 	return C;
 }
 
-int main()
-{
-	float* a = new float[4 * 4];
-	float* b = new float[4 * 4];
-	int size[2] = { 4, 4 };
-	sycl::default_selector selector;
-	queue q(selector);
-	float* out = matmul<float>(q, a, b, size);
-	return 0;
+
+// OPENMP 
+void matmul(float* A, float* B, float* C, int m, int n, int p){
+    #pragma omp parallel for
+        for(int i=0; i<m; i++){
+            for(int j=0; j<p; j++){
+                float result = 0.0f;
+                #pragma omp simd
+                    for(int k=0; k<n; k++){
+                        result += *(A + i*m + k) * *(B + k*p + j);
+                    }
+                *(C + i*m + j) = result;
+            }
+        }
 }
