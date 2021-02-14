@@ -12,6 +12,8 @@ Currently the It contains the Following Operations -
 * BLAS I and some BLAS II routines.
 * Filter Convolutions and Morphological operations like Erode and Dilate.
 * A Convolutional Layer(Without the Backprop, hopefully I will commit that soon)
+* Linear layer (wx^T + b) both forward as well as backprop(dL/dW and dL/dX). Currently the matmul is implemented in openMP.
+  I will include forward and backward definitions which pass it off to the local BLAS. (sgemm_ for CPU and cuBLAS for CUDA. for SYCL, Matmul to be coded). 
 * Machine Learning Models like Linear and Logistic regression, Bayes and Markov chains(Soon)
 * Activations like Relu, Leaky Relu(Both are non divergent operations) and Tanh
 * Parallel sorting and graph traversals
