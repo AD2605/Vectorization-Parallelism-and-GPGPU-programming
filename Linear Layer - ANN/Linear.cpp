@@ -27,6 +27,7 @@ public:
 
 
     float* forward(float* input, int batch_size){
+        // Ideally to be passed to a BLAS GEMM
         this->current_input = input;
         float* output = (float*)malloc(batch_size * this->output_neurons * sizeof(float));
 
