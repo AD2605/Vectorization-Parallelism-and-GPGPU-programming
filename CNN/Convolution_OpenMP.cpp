@@ -49,7 +49,7 @@ public:
 
         for(int i=0; i<batch; i++){
             auto image_per_batch = input + i*this->in_channels*width*height;
-  
+  #pragma omp collapse(2) parallel for
             for (int j = 0; j<this->out_channels; j++){
                 float* kernel = this->Kernels.at(j);
 
@@ -62,6 +62,7 @@ public:
                             float pixel_value = 0.0f;
 
                             for(int l = 0; l<this->kernel_size; l++){
+#pragma omp simd
                                 for(int m = 0; m<this->kernel_size; m++){
                                     int x = h - dx + l;
                                     int y = i - dy + k;
